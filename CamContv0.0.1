@@ -1,0 +1,74 @@
+using UnityEngine;
+using System.Collections;
+
+public class CameraScript : MonoBehaviour 
+{
+
+	// Use this for initialization
+	void Start () 
+	{
+	}
+
+	float mouseX;
+	float mouseY;
+	public float cameraMoveSpeed = 250f;
+	public float cameraDistanceMax = 20f;
+	public float cameraDistanceMin = 5f;
+	public float cameraDistance = 10f;
+	public float cameraZoomSpeed = 500f;
+	public float zoomAmount = 1f;
+	public float scrollMin = 90f;
+	public float scrollMax = 700f;
+
+	// Update is called once per frame
+	void Update () 
+	{
+
+		if(Input.GetKey(KeyCode.W))
+		{
+			var forwardKey = transform.forward;
+			forwardKey.y = 0.0f;
+			transform.Translate(forwardKey * cameraMoveSpeed * Time.deltaTime, Space.World);
+			Debug.Log("wKey");
+		}
+		if(Input.GetKey(KeyCode.D))
+		{
+			var rightKey = transform.right;
+			rightKey.y = 0.0f;
+			transform.Translate(rightKey * cameraMoveSpeed * Time.deltaTime, Space.World);
+			Debug.Log("dKey");
+		}
+		if(Input.GetKey(KeyCode.S))
+		{
+			var backKey = -transform.forward;
+			backKey.y = 0.0f;
+			tran6sform.Translate(backKey * cameraMoveSpeed * Time.deltaTime, Space.World);
+			Debug.Log("sKey");
+		}
+		if(Input.GetKey(KeyCode.A))
+		{
+			var leftKey = -transform.right;
+			leftKey.y = 0.0f;
+			transform.Translate(leftKey * cameraMoveSpeed * Time.deltaTime, Space.World);
+			Debug.Log("aKey");
+		}
+		if(Input.GetKey(KeyCode.Mouse1))
+		{
+			mouseX += Input.GetAxis("Mouse X");
+			mouseY -= Input.GetAxis("Mouse Y");
+			transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
+		}
+		if(Input.GetAxis("Mouse ScrollWheel") > 0)
+		{
+			var scrollForward = transform.forward;
+			transform.Translate(scrollForward * cameraZoomSpeed * Time.deltaTime, Space.World);
+			Debug.Log("Scrolled Forward");
+		}
+		if(Input.GetAxis("Mouse ScrollWheel") < 0)
+		{
+			var scrollBack = -transform.forward;
+			transform.Translate(scrollBack * cameraZoomSpeed * Time.deltaTime, Space.World);
+			Debug.Log("Scrolled Back");
+		}
+	}
+}
